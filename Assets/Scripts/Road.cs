@@ -26,14 +26,10 @@ public class Road : MonoBehaviour
         if (Move)
         {
             foreach (Tile T in Tiles)
-            {
-                if (!T.clear)
-                {
+            {                               
                     T.transform.Translate(5 * Time.deltaTime, 0, 0);
                     //T.transform.position = Vector3.Lerp(T.transform.position, new Vector3(T.transform.position.x + 1, T.transform.position.y, T.transform.position.z), 0.2f);
-                    if (T.transform.position.x > 10 + lives) T.Fall();
-                }
-                
+                    if (T.transform.position.x > 10 + lives) T.Fall();                                
             }
         }
     }

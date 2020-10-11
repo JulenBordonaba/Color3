@@ -31,7 +31,7 @@ public class Tile : MonoBehaviour
     }
     public void SetColor()
     {
-        Color = Mathf.FloorToInt(Random.Range(1, 4));
+        Color = Mathf.FloorToInt(Random.Range(1, 4f));
         Col.material = Colors[Color - 1];        
     }
 
