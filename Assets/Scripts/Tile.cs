@@ -8,6 +8,8 @@ public class Tile : MonoBehaviour
     public Rigidbody rb;
     public MeshRenderer Col;    
     public int Color;
+    public int dir;
+    public int Livespam;
 
     void Start()
     {
