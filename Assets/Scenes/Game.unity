@@ -267,7 +267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &220001173
 Animator:
   serializedVersion: 3
@@ -4034,6 +4034,7 @@ MonoBehaviour:
   lives: 3
   tile: {fileID: 2931844345896239563, guid: 4c705b97a2bf0b7488d666b95ae0032e, type: 3}
   dir: 0
+  DirChangeChance: 10
 --- !u!4 &2078498304
 Transform:
   m_ObjectHideFlags: 0

@@ -7,10 +7,11 @@ public class PruevaCubo : MonoBehaviour
 
     public int dir;
     public bool Move;
-    // Start is called before the first frame update
+    public Vector3 pos;
     void Start()
     {
-        StartCoroutine(StartMove());
+        //StartCoroutine(StartMove());
+        pos = transform.position;
     }
 
     // Update is called once per frame
@@ -21,31 +22,39 @@ public class PruevaCubo : MonoBehaviour
 
     public void Avanzar()
     {
-        if(Move)transform.Translate(5 * Time.deltaTime * (-Mathf.Cos(dir * Mathf.PI / 2)), 0, 5 * Time.deltaTime * (Mathf.Sin(dir * Mathf.PI / 2)));
+        //if(Move)transform.Translate(5 * Time.deltaTime * (-Mathf.Cos(dir * Mathf.PI / 2)), 0, 5 * Time.deltaTime * (Mathf.Sin(dir * Mathf.PI / 2)));
+        transform.position = Vector3.Lerp(transform.position, pos, 0.2f);
     }
 
-    IEnumerator Go()
+    /*IEnumerator Go()
     {
         Move = true;
         yield return new WaitForSeconds(0.2f);
         Move = false;
+        Road.i.Step();
         GetDir();
         yield return new WaitForSeconds(0.75f);
         StartCoroutine(Go());
-    }
+    }*/
 
-    IEnumerator StartMove()
+    /*IEnumerator StartMove()
     {
         yield return new WaitForSeconds(1f);
         StartCoroutine(Go());
-    }
+    }*/
 
     private void GetDir()
     {
         foreach(Tile T in Road.i.Tiles)
         {
-            if (T.Livespam == 8) dir = T.dir;
+            if (T.Livespam == 9) dir = T.dir;
         }
         
+    }
+
+    public void Step()
+    {
+        pos += new Vector3(-Mathf.Cos(dir * Mathf.PI / 2), 0, Mathf.Sin(dir * Mathf.PI / 2));
+        GetDir();
     }
 }

@@ -19,11 +19,11 @@ public class Tile : MonoBehaviour
     {
         Fallen();
     }  
-    public void Fall()
+    public void Fall() //Hace caer el Tile
     {
         rb.isKinematic = false;
     }   
-    public void Fallen()
+    public void Fallen() // Hace despawnear el Tile
     {
         if(transform.position.y < -15)
         {
@@ -31,7 +31,7 @@ public class Tile : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void SetColor()
+    public void SetColor() //Asigna un color y un material de la lista al azar
     {
         Color = Mathf.FloorToInt(Random.Range(1, 4f));
         Col.material = Colors[Color - 1];        
