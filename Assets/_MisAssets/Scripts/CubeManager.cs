@@ -23,7 +23,8 @@ public class CubeManager : MonoBehaviour
 
     protected Tile currentTile;
 
-    
+    protected Vector3 nextPos;
+
     protected bool canMove = true;
     
 
@@ -37,7 +38,7 @@ public class CubeManager : MonoBehaviour
         currentTile.cubeManager = this;
         model.transform.localPosition = Vector3.zero;
     }
-
+    
 
     /// <summary>
     /// This functions sets the material that matches with the given color ID, if there are not matches it logs an error.
@@ -58,6 +59,23 @@ public class CubeManager : MonoBehaviour
     }
 
     /// <summary>
+    /// This function sets the current tiles color on the cube
+    /// </summary>
+    public void SetCurrentColor()
+    {
+        Debug.Log("CurrentColor");
+        foreach (MaterialID materialID in materials)
+        {
+            if (materialID.id == currentTile.currentMaterial.id)
+            {
+                renderer.material = materialID.material;
+                return;
+            }
+        }
+    }
+
+    
+    /// <summary>
     /// This function checks if the colorID given matches with the next tiles colorID
     /// </summary>
     /// <param name="colorID">The id of the given color</param>
@@ -65,12 +83,11 @@ public class CubeManager : MonoBehaviour
     {
 
         int nextTileIndex = NextTileIndex;
-        print(nextTileIndex);
+
         if(Road.Instance.tiles[nextTileIndex].currentMaterial.id == colorID)
         {
             if(canMove)
             {
-                SetColor(colorID);
                 Move(nextTileIndex);
             }
         }
@@ -89,25 +106,17 @@ public class CubeManager : MonoBehaviour
         //we restrict the movement
         canMove = false;
         
-        //we update the animator
-        animator.SetTrigger("Move");
 
-        //we generate a new tile
+        //we generate a new Tile
         Road.Instance.Step();
-        
+
         //we get the next cube position
-        Vector3 newPos = Road.Instance.tiles[nextTileIndex].transform.position;
-        newPos.y = transform.position.y;
+        nextPos = Road.Instance.tiles[nextTileIndex].transform.position;
+        nextPos.y = transform.position.y;
 
         //we rotate the cube toward the next tile
-        model.transform.LookAt(newPos);
-
-        //we move the cube to the next position
-        Tween myTween = transform.DOMove(newPos, movementTime);
-
-        //when the movement is finished we allow it again
-        myTween.OnComplete(AllowMovement);
-
+        model.transform.forward = nextPos - transform.position;
+        
         //we deassign the currentTile's cubeManager
         currentTile.cubeManager = null;
 
@@ -116,6 +125,9 @@ public class CubeManager : MonoBehaviour
 
         //we assign the new current tile's cubeManager
         currentTile.cubeManager = this;
+
+        //we update the animator
+        animator.SetTrigger("Move");
     }
 
     /// <summary>
@@ -125,7 +137,18 @@ public class CubeManager : MonoBehaviour
     {
         StartCoroutine(AllowMovementCoroutine(movementCooldown));
     }
+    
+    /// <summary>
+    /// This function starts the movement of the cube  
+    /// </summary>
+    public void StartMovement()
+    {
+        //we move the cube to the next position
+        Tween myTween = transform.DOMove(nextPos, movementTime);
 
+        //when the movement is finished we allow it again
+        myTween.OnComplete(AllowMovement);
+    }
 
     /// <summary>
     /// This coroutine reactivates the movement of the cube afte some time
