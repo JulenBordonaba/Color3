@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public List<Material> Colors;
+    public List<MaterialID> materials;
     public Rigidbody rb;
     public MeshRenderer Col;    
-    public int Color;
     public int dir;
     public int Livespam;
+    public MaterialID currentMaterial;
 
     void Start()
     {
@@ -33,8 +33,9 @@ public class Tile : MonoBehaviour
     }
     public void SetColor() //Asigna un color y un material de la lista al azar
     {
-        Color = Mathf.FloorToInt(Random.Range(1, 4f));
-        Col.material = Colors[Color - 1];        
+        currentMaterial = materials[Random.Range(0, materials.Count)];
+        
+        Col.material = currentMaterial.material;        
     }
 
 }

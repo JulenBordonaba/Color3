@@ -9,6 +9,9 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     static T m_instance;
 
+    /// <summary>
+    /// The object static Instance
+    /// </summary>
     public static T Instance
     {
         get

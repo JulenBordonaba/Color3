@@ -19,6 +19,26 @@ public class CubeManager : MonoBehaviour
     
     private bool canMove = true;
 
+    //código temporal
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            CheckTile("Red");
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            CheckTile("Green");
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            CheckTile("Blue");
+        }
+
+    }
+
 
     /// <summary>
     /// This functions sets the material that matches with the given color ID, if there are not matches it logs an error.
@@ -44,14 +64,10 @@ public class CubeManager : MonoBehaviour
     /// <param name="colorID">The id of the given color</param>
     public void CheckTile(string colorID)
     {
-        //if(Road.Instance.Tiles[0].currentMaterial.id == colorID)
+        if(Road.Instance.Tiles[0].currentMaterial.id == colorID)
         {
             if(canMove)
             {
-                //Tile currentTile = Road.Instance.Tiles[0];
-                //currentTile.Fall();
-                //Road.Instance.Tiles.Remove(currentTile);
-
                 SetColor(colorID);
                 Move();
             }
@@ -66,6 +82,8 @@ public class CubeManager : MonoBehaviour
         canMove = false;
 
         animator.SetTrigger("Move");
+
+        Road.Instance.Step();
 
         StartCoroutine(AllowMovement(movementCooldown));
     }

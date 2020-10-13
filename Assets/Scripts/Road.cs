@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Road : MonoBehaviour
+public class Road : Singleton<Road>
 {
     static public Road i;
     public GameObject tile;
@@ -80,6 +80,8 @@ public class Road : MonoBehaviour
 
     public void Step() //Funcion Que inicia todo el movimiento y la que hay que llamar cuando sepulse el boton correcto
     {
+        print("Step");
+
         pos += new Vector3(-Mathf.Cos(dir * Mathf.PI / 2),0, Mathf.Sin(dir * Mathf.PI / 2));
         dir = RollDir(dir);
         foreach (Tile T in Tiles)

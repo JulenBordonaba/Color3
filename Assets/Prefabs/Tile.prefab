@@ -106,14 +106,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83219f68e33627846b3753560e5b1900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Colors:
-  - {fileID: 2100000, guid: e98413fdb435573409a449f8d76c20af, type: 2}
-  - {fileID: 2100000, guid: de184695e1ceb4f4a9cdc90d65797354, type: 2}
-  - {fileID: 2100000, guid: e038a09b98f8da4499b25c9e102b9d75, type: 2}
+  materials:
+  - id: Red
+    material: {fileID: 2100000, guid: e98413fdb435573409a449f8d76c20af, type: 2}
+  - id: Green
+    material: {fileID: 2100000, guid: de184695e1ceb4f4a9cdc90d65797354, type: 2}
+  - id: Blue
+    material: {fileID: 2100000, guid: e038a09b98f8da4499b25c9e102b9d75, type: 2}
   rb: {fileID: 2931844345896239562}
   Col: {fileID: 2931844345896239559}
-  clear: 0
-  Color: 0
+  dir: 0
+  Livespam: 0
+  currentMaterial:
+    id: 
+    material: {fileID: 0}
 --- !u!54 &2931844345896239562
 Rigidbody:
   m_ObjectHideFlags: 0
