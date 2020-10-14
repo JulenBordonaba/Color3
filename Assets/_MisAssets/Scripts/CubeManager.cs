@@ -15,6 +15,9 @@ public class CubeManager : MonoBehaviour
     [Tooltip("The time the cube lasts to reach the next position")]
     public float movementTime = 0.5f;
 
+    [Tooltip("The time we save the last input")]
+    public float inputSaveTime = 0.2f;
+
     [Header("Components")]
     public Animator animator;
     public Rigidbody rb;
@@ -26,6 +29,12 @@ public class CubeManager : MonoBehaviour
     protected Vector3 nextPos;
 
     protected bool canMove = true;
+
+    protected string nextColorID;
+
+    protected bool hasInput = false;
+
+    protected float inputPassedTime = 0;
     
 
     /// <summary>
@@ -38,7 +47,40 @@ public class CubeManager : MonoBehaviour
         currentTile.cubeManager = this;
         model.transform.localPosition = Vector3.zero;
     }
-    
+
+    /// <summary>
+    /// We update the component
+    /// </summary>
+    private void Update()
+    {
+        InputTimeCount();
+    }
+
+    /// <summary>
+    /// This function saves the last input
+    /// </summary>
+    /// <param name="colorID">The id of the color</param>
+    public void SaveInput(string colorID)
+    {
+        hasInput = true;
+        nextColorID = colorID;
+        inputPassedTime = 0;
+    }
+
+    /// <summary>
+    /// This function counts the time since the last input and it resets it if it excedes the time
+    /// </summary>
+    public void InputTimeCount()
+    {
+        if (!hasInput) return;
+
+        inputPassedTime += Time.deltaTime;
+
+        if(inputPassedTime>=inputSaveTime)
+        {
+            hasInput = false;
+        }
+    }
 
     /// <summary>
     /// This functions sets the material that matches with the given color ID, if there are not matches it logs an error.
@@ -145,9 +187,7 @@ public class CubeManager : MonoBehaviour
     {
         //we move the cube to the next position
         Tween myTween = transform.DOMove(nextPos, movementTime);
-
-        //when the movement is finished we allow it again
-        myTween.OnComplete(AllowMovement);
+        
     }
 
     /// <summary>
@@ -159,6 +199,13 @@ public class CubeManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_cooldown);
         canMove = true;
+
+
+        //we check if we have an input saved
+        if(hasInput)
+        {
+            CheckTile(nextColorID);
+        }
     }
 
     /// <summary>

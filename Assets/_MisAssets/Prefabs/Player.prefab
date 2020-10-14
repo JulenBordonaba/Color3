@@ -116,8 +116,9 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: de184695e1ceb4f4a9cdc90d65797354, type: 2}
   - id: Blue
     material: {fileID: 2100000, guid: e038a09b98f8da4499b25c9e102b9d75, type: 2}
-  movementCooldown: 0.1
+  movementCooldown: 0
   movementTime: 0.5
+  inputSaveTime: 0.4
   animator: {fileID: 3450542594342240437}
   rb: {fileID: 3351967757500105693}
   renderer: {fileID: 7749368556345617799}
