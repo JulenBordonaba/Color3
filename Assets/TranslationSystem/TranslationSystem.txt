@@ -1,0 +1,18 @@
+To modify the DataBase used in this asset you will need to download this:
+https://sourceforge.net/projects/sqlitebrowser/
+
+Configure the database:
+In the table called "Lenguage" add all the lenguages you will use
+Then, in the "Text" table you can add the translations
+-The "TextID" column is to relation the database register with the game Text.
+-The "LenguageID" column is to relation the text with on lenguage.
+-The "Content" column is the translated text tath will appear in the game Text
+
+Instructions:
+-Add the TranslationManager to an object in the scene first scene loaded in the game, this will load all the data from the database
+-Select the "Dont Destroy" parameter from the TranslatorManager
+-Add a Translator to the texts you wanna translate
+-Set the "TextID" parameter of the Translator, this will take the content from the database with the same TextID from the lenguage you are using in that moment
+
+Note: there aren't all the characters of the extended ASCII, if you have problem with some character try adding it in the "ASCIIExtended" script
+To do that set in the "characters" dictionary the character you want in his corresponding byte number. See https://www.ascii-code.com/

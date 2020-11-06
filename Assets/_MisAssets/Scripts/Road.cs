@@ -24,7 +24,7 @@ public class Road : Singleton<Road>
 
     private float time;
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         foreach (Tile t in tiles)
