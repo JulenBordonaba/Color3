@@ -2,7 +2,11 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+<<<<<<< HEAD
 //cambio
+=======
+
+>>>>>>> origin/main
 public class CameraManager : Singleton<CameraManager>
 {
     public Camera myCamera;
