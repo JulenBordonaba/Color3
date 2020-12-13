@@ -24,6 +24,7 @@ public class CubeManager : MonoBehaviour
     public new Renderer renderer;
     public GameObject model;
     public GameObject cam;
+    public ScoreManager score;
 
     protected Tile currentTile;
 
@@ -132,13 +133,17 @@ public class CubeManager : MonoBehaviour
             if(canMove)
             {
                 Move(nextTileIndex);
+                score.AddScore();
             }
         }
         else
         {
             //sacamos el menú de muerte
             //Die();
-            Road.Instance.TileFall();
+            if (canMove)
+            {
+                Road.Instance.TileFall();
+            }
         }
     }
 
