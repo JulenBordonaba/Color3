@@ -23,7 +23,7 @@ public class CubeManager : MonoBehaviour
     public Rigidbody rb;
     public new Renderer renderer;
     public GameObject model;
-    public GameObject camera;
+    public GameObject cam;
 
     protected Tile currentTile;
 
@@ -235,7 +235,7 @@ public class CubeManager : MonoBehaviour
     /// </summary>
     public void Die()
     {
-        camera.transform.parent = null;
+        cam.transform.parent = null;
         rb.isKinematic = false;
         canMove = false;
         StartCoroutine(RestartGame());
@@ -246,7 +246,8 @@ public class CubeManager : MonoBehaviour
     public IEnumerator RestartGame()
     {
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //Activar ventana flotante con Game Over puntuacion boton nueva partida y boton salir.
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Borrar.
     }
     
 }

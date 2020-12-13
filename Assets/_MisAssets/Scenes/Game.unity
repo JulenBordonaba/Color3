@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44370452, g: 0.49304372, b: 0.5725876, a: 1}
+  m_IndirectSpecularColor: {r: 0.44370392, g: 0.493043, b: 0.57258666, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2012,6 +2012,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1466217451}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1548082879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7749368555677671004, guid: 872c191821cd5ab488bc18618ad7588b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7749368554756436781}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1642594874
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,6 +2972,11 @@ PrefabInstance:
       propertyPath: movementTime
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7749368554703805872, guid: 872c191821cd5ab488bc18618ad7588b,
+        type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 1548082879}
     - target: {fileID: 7749368554703805873, guid: 872c191821cd5ab488bc18618ad7588b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3024,6 +3035,11 @@ PrefabInstance:
     - target: {fileID: 7749368555677671006, guid: 872c191821cd5ab488bc18618ad7588b,
         type: 3}
       propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351967757500105693, guid: 872c191821cd5ab488bc18618ad7588b,
+        type: 3}
+      propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
