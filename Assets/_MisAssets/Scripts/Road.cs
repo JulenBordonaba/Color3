@@ -115,12 +115,30 @@ public class Road : Singleton<Road>
     {
         if (Random.Range(0, 100) <= DirChangeChance)
         {
+            int aux = 0;
             if (Random.Range(0, 100) <= 50)
             {
-                return dir + 1;
+                aux += 1; ;
             }
-            else return dir - 1;
-        } else return dir;
+            else aux -= 1;
+
+            while(aux<0)
+            {
+                aux += 2;
+            }
+            while (aux > 1)
+            {
+                aux -= 2;
+            }
+
+            return aux;
+            //if (Random.Range(0, 100) <= 50)
+            //{
+            //    return dir + 1;
+            //}
+            //else return dir - 1;
+        }
+        else return dir;
     }
 
     public void TileFall()

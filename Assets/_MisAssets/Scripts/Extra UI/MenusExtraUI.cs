@@ -8,6 +8,7 @@ namespace ExtraUI
 {
     public class ExtraUIMenus
     {
+#if UNITY_EDITOR
         public static GameObject SelectedGameObject
         {
             get
@@ -80,6 +81,6 @@ namespace ExtraUI
         {
 
         }
-        
+#endif
     }
 }
