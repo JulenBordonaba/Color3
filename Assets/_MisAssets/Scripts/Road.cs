@@ -15,12 +15,16 @@ public class Road : Singleton<Road>
 
     public int lives; //Mover Mas adelante a Una clase GameplayManager o al propio cuvo
     public int dir = 0; // 0-> x negativo|1-> z positivo|2-> x positivo|3-> z negativo
+    [Tooltip("Numero minimo de steps que ocurriran antes de havilitarse el cambio de sentido")]
+    public int dirChangeMeasure; 
     [Tooltip("Probabilidad de que ocurra un cambio de sentido. 0 no ocurrira y 100 ocurrira siempre")]
     public int DirChangeChance;
    
     private Vector3 pos;
 
     private int numTiles = 0;
+
+    private int dirChangeCount = 0;
 
     private float time;
 
@@ -113,23 +117,46 @@ public class Road : Singleton<Road>
 
     private int RollDir(int dir) //Al azar girara o no y si gira al azar entre izquierda y derecha
     {
-        if (Random.Range(0, 100) <= DirChangeChance)
+        if (Random.Range(0, 100) <= DirChangeChance && dirChangeCount > dirChangeMeasure)
         {
             if (Random.Range(0, 100) <= 50)
             {
+                dirChangeCount = 0;
                 return dir + 1;
             }
-            else return dir - 1;
-        } else return dir;
+            else
+            {
+                dirChangeCount = 0;
+                return dir - 1;
+            }
+        }
+        else
+        {
+            dirChangeCount++;
+            return dir;
+        }
     }
 
     public void TileFall()
     {
+        int max = 0;
+        Tile auxTile = null;
         foreach (Tile T in tiles)
         {
             T.Livespam++;
-            if (T.Livespam > 7 + lives) T.Fall();
+            if(T.Livespam > 9 + lives) T.Fall();
+            else if (T.Livespam > 7 + lives) 
+            {
+                //T.Fall();
+                if(T.Livespam > max)
+                {
+                    max = T.Livespam;
+                    auxTile = T;
+                }
+            }
+
         }
+        if (auxTile != null) { auxTile.Fall(); }
     }
 
 
@@ -141,11 +168,11 @@ public class Road : Singleton<Road>
 
         while(true)
         {
-
             TileFall();
-
+            //Step();
             yield return new WaitForSeconds(fallTimeProgression.Evaluate(time));
         }
+
     }
 
     public void Step() //Funcion Que inicia todo el movimiento y la que hay que llamar cuando sepulse el boton correcto

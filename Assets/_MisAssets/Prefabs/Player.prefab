@@ -125,6 +125,7 @@ MonoBehaviour:
   renderer: {fileID: 7749368556345617799}
   model: {fileID: 2031690810393376701}
   cam: {fileID: 7749368555677671004}
+  score: {fileID: 5920485673513297535}
 --- !u!54 &3351967757500105693
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -173,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  scoreText: {fileID: 0}
 --- !u!1 &7749368555677671004
 GameObject:
   m_ObjectHideFlags: 0
