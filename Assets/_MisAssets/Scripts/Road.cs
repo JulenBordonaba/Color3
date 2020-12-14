@@ -119,8 +119,10 @@ public class Road : Singleton<Road>
     {
         if (Random.Range(0, 100) <= DirChangeChance && dirChangeCount > dirChangeMeasure)
         {
+            int aux = 0;
             if (Random.Range(0, 100) <= 50)
             {
+<<<<<<< HEAD
                 dirChangeCount = 0;
                 return dir + 1;
             }
@@ -135,6 +137,29 @@ public class Road : Singleton<Road>
             dirChangeCount++;
             return dir;
         }
+=======
+                aux += 1; ;
+            }
+            else aux -= 1;
+
+            while(aux<0)
+            {
+                aux += 2;
+            }
+            while (aux > 1)
+            {
+                aux -= 2;
+            }
+
+            return aux;
+            //if (Random.Range(0, 100) <= 50)
+            //{
+            //    return dir + 1;
+            //}
+            //else return dir - 1;
+        }
+        else return dir;
+>>>>>>> origin/JulenBordonaba
     }
 
     public void TileFall()

@@ -36,15 +36,14 @@ namespace TranslationSystem
 
         public void ChangeLenguage(string lenguageID)
         {
-            print("Change");
+            if (string.Compare(lenguageID, "") == 0) return;
+
             if (!myText)
             {
                 myText = GetComponent<TextMeshProUGUI>();
             }
 
             myText.text = TranslationManager.Instance.traductions[lenguageID][textID];
-
-            print(TranslationManager.Instance.traductions[lenguageID][textID]);
         }
     }
 
