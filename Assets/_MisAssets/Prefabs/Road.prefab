@@ -74,4 +74,5 @@ MonoBehaviour:
   distanceBetweenTiles: 1
   lives: 3
   dir: 0
+  dirChangeMeasure: 3
   DirChangeChance: 10

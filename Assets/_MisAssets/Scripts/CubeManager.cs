@@ -23,6 +23,8 @@ public class CubeManager : MonoBehaviour
     public Rigidbody rb;
     public new Renderer renderer;
     public GameObject model;
+    public GameObject cam;
+    public ScoreManager score;
 
     protected Tile currentTile;
 
@@ -131,12 +133,17 @@ public class CubeManager : MonoBehaviour
             if(canMove)
             {
                 Move(nextTileIndex);
+                score.AddScore();
             }
         }
         else
         {
             //sacamos el menú de muerte
-            Die();
+            //Die();
+            if (canMove)
+            {
+                Road.Instance.TileFall();
+            }
         }
     }
 
@@ -156,7 +163,7 @@ public class CubeManager : MonoBehaviour
         nextPos = Road.Instance.tiles[nextTileIndex].transform.position;
         nextPos.y = transform.position.y;
 
-        //we rotate the cube toward the next tile
+        //we move the cube toward the next tile
         model.transform.forward = nextPos - transform.position;
         
         //we deassign the currentTile's cubeManager
@@ -233,8 +240,19 @@ public class CubeManager : MonoBehaviour
     /// </summary>
     public void Die()
     {
+        cam.transform.parent = null;
+        rb.isKinematic = false;
+        canMove = false;
+        StartCoroutine(RestartGame());
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+    }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    public IEnumerator RestartGame()
+    {
+        yield return new WaitForSeconds(3);
+        //Activar ventana flotante con Game Over puntuacion boton nueva partida y boton salir.
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Borrar.
     }
     
 }
