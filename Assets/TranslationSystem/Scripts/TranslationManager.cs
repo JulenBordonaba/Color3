@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using UnityEngine;
 
 namespace TranslationSystem
@@ -13,24 +14,49 @@ namespace TranslationSystem
         //The event called whenever the lenguage is changed
         public event Action<string> OnLenguageChanged;
 
+        public event Action OnDataLoaded;
+
         [HideInInspector]
-        //the disctionary of lenguages
+        //the dictionary of lenguages
         public Dictionary<string, Dictionary<string, string>> traductions = new Dictionary<string, Dictionary<string, string>>();
         
-
-
+        public string currentLenguage;
+        [HideInInspector]
+        public bool loaded = false;
+        
         protected override void Awake()
         {
             base.Awake();
+            
             LoadLenguageData();
+            StartCoroutine(SetSavedLenguage());
 
         }
 
+        public IEnumerator SetSavedLenguage()
+        {
+            yield return new WaitUntil(() => loaded && SaveLoadManager.Instance.dataLoaded);
+
+            string lenguage = ConfigurationManager.settings.lenguage;
+
+            if(lenguage=="")
+            {
+                if(traductions.Count>0)
+                {
+                    lenguage = traductions.Keys.ElementAt(0);
+                }
+            }
+
+            currentLenguage = lenguage;
+
+            ChangeLenguage(currentLenguage);
+        }
 
         public void ChangeLenguage(string lenguageID)
         {
-            print("ChangeLEnguage");
-            OnLenguageChanged.Invoke(lenguageID);
+            print("ChangeLenguage");
+            currentLenguage = lenguageID;
+            OnLenguageChanged?.Invoke(lenguageID);
         }
 
         private void LoadLenguageData()
@@ -98,9 +124,10 @@ namespace TranslationSystem
                 dbconn = null;
             }
 
-            
-            
 
+
+            loaded = true;
+            OnDataLoaded?.Invoke();
             print("final loadData");
         }
     }

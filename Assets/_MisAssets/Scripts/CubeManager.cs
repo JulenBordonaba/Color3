@@ -135,7 +135,7 @@ public class CubeManager : MonoBehaviour
         }
         else
         {
-            //sacamos el menú de muerte
+            //Death Menu
             Die();
         }
     }
