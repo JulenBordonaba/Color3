@@ -22,6 +22,8 @@ namespace TranslationSystem
                 myText = GetComponent<TextMeshProUGUI>();
             }
             TranslationManager.Instance.OnLenguageChanged += ChangeLenguage;
+            TranslationManager.Instance.ChangeLenguage(TranslationManager.Instance.currentLenguage);
+            //ChangeLenguage(TranslationManager.Instance.currentLenguage);
         }
 
         private void OnDisable()
