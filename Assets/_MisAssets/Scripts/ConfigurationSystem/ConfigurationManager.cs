@@ -114,7 +114,7 @@ public class ConfigurationManager : MonoBehaviour
     }
 
 
-    #region Music
+    #region Volume
 
     public void ChangeMusicVolume()
     {
@@ -204,5 +204,5 @@ public class ConfigurationSettings
     public float effectVolume = 1;
     public Vector2 sensitivity = Vector2.one;
     public ControllerType controllerType = ControllerType.PS4;
-    public string lenguage;
+    public string lenguage = "";
 }

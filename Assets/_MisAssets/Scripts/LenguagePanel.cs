@@ -91,7 +91,7 @@ public class LenguagePanel : MonoBehaviour
         {
             if (string.Compare(lenguages[i].lenguageID, TranslationManager.Instance.currentLenguage) == 0)
             {
-                print(lenguages[i].lenguageID + " " + i);
+                //print(lenguages[i].lenguageID + " " + i);
                 current = i;
             }
         }
@@ -162,10 +162,5 @@ public class LenguagePanel : MonoBehaviour
     }
 
     
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

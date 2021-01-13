@@ -16,34 +16,55 @@ namespace TranslationSystem
 
         public event Action OnDataLoaded;
 
-        [HideInInspector]
         //the dictionary of lenguages
-        public Dictionary<string, Dictionary<string, string>> traductions = new Dictionary<string, Dictionary<string, string>>();
-        
+        public Dictionary<string, Dictionary<string, string>> translations;
+
+        public TranslationData data;
+
         public string currentLenguage;
         [HideInInspector]
         public bool loaded = false;
-        
+
         protected override void Awake()
         {
             base.Awake();
             
+            loaded = false;
             LoadLenguageData();
             StartCoroutine(SetSavedLenguage());
 
         }
 
+        public void LoadLenguageData()
+        {
+
+            translations = data.DataToDictionary();
+            
+            loaded = true;
+            OnDataLoaded?.Invoke();
+        }
+
+        
+        
+        public void LoadLenguageDataEditor()
+        {
+            data.LoadLenguageData();
+        }
+        
         public IEnumerator SetSavedLenguage()
         {
+            yield return new WaitForEndOfFrame();
             yield return new WaitUntil(() => loaded && SaveLoadManager.Instance.dataLoaded);
 
             string lenguage = ConfigurationManager.settings.lenguage;
 
-            if(lenguage=="")
+            print("El idioma almacenado es: " + ConfigurationManager.settings.lenguage);
+
+            if (lenguage == "")
             {
-                if(traductions.Count>0)
+                if (translations.Count > 0)
                 {
-                    lenguage = traductions.Keys.ElementAt(0);
+                    lenguage = translations.Keys.ElementAt(0);
                 }
             }
 
@@ -54,85 +75,21 @@ namespace TranslationSystem
 
         public void ChangeLenguage(string lenguageID)
         {
-            print("ChangeLenguage");
+            if (lenguageID == "") return;
+
+            print("ChangeLenguage " + lenguageID);
             currentLenguage = lenguageID;
+
+            {
+                ConfigurationManager.settings.lenguage = currentLenguage;
+            }
             OnLenguageChanged?.Invoke(lenguageID);
         }
 
-        private void LoadLenguageData()
-        {
-            string conn = "URI=file:" + Application.dataPath + "/TranslationSystem/Data/TranslationData.sqlite"; //Path to database.
-            IDbConnection dbconn;
-            dbconn = (IDbConnection)new SqliteConnection(conn);
-            dbconn.Open(); //Open connection to the database.
-            IDbCommand dbcmd = dbconn.CreateCommand();
-            string sqlQuery = "SELECT * " + "FROM Lenguage";
-            dbcmd.CommandText = sqlQuery;
-            IDataReader reader = dbcmd.ExecuteReader();
-            List<Lenguage> lenguages = new List<Lenguage>();
-            while (reader.Read())
-            {
-                string lenguageID = reader.GetString(0);
-
-                lenguages.Add(new Lenguage(lenguageID));
-
-            }
-            reader.Close();
-            reader = null;
-            
-            dbcmd.Dispose();
-            dbcmd = null;
-
-            dbconn.Close();
-            dbconn = null;
-
-            traductions = new Dictionary<string, Dictionary<string, string>>();
-
-            foreach (Lenguage lenguage in lenguages)
-            {
-                conn = "URI=file:" + Application.dataPath + "/TranslationSystem/Data/TranslationData.sqlite"; //Path to database.
-
-                dbconn = (IDbConnection)new SqliteConnection(conn);
-                dbconn.Open(); //Open connection to the database.
-                dbcmd = dbconn.CreateCommand();
-                sqlQuery = "SELECT * FROM Text WHERE LenguageID=\"" + lenguage.lenguageID + "\"";
-                dbcmd.CommandText = sqlQuery;
-                reader = dbcmd.ExecuteReader();
-                lenguage.lenguageTexts = new Dictionary<string, string>();
-                while (reader.Read())
-                {
-                    byte[] contentInBytes = (byte[])reader["Content"];
-                    string content = ASCIIExtended.ByteToString(contentInBytes);
-                    
-
-                    
-                    string textID = reader.GetString(0);
-
-                    lenguage.lenguageTexts.Add(textID, content);
-
-                }
-
-                traductions.Add(lenguage.lenguageID, lenguage.lenguageTexts);
-
-                reader.Close();
-                reader = null;
-                
-                dbcmd.Dispose();
-                dbcmd = null;
-
-                dbconn.Close();
-                dbconn = null;
-            }
-
-
-
-            loaded = true;
-            OnDataLoaded?.Invoke();
-            print("final loadData");
-        }
+        
     }
 
-    
+
 }
 
 

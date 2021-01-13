@@ -1,25 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour{
 
-    public int score = 0;
-    public Text scoreText;
+    public static ScoreData record;
 
-    private void Update()
+    public ScoreData currentScore = new ScoreData();
+    public TextMeshProUGUI scoreText;
+
+    private void Start()
     {
-        scoreText.text = score.ToString();
+        scoreText.text = currentScore.score.ToString();
     }
 
     public void AddScore() 
     {
-        score++;
+        currentScore.score++;
+        scoreText.text = currentScore.score.ToString();
+    }
+
+    public void CheckRecord()
+    {
+        if(currentScore.score > record.score)
+        {
+            SetRecord();
+        }
+    }
+
+    private void SetRecord()
+    {
+        record.score = currentScore.score;
     }
 
     public void ResetScore()
     {
-        score = 0;
+        currentScore.score = 0;
+        scoreText.text = currentScore.score.ToString();
     }
 }

@@ -22,7 +22,7 @@ namespace TranslationSystem
                 myText = GetComponent<TextMeshProUGUI>();
             }
             TranslationManager.Instance.OnLenguageChanged += ChangeLenguage;
-            TranslationManager.Instance.ChangeLenguage(TranslationManager.Instance.currentLenguage);
+            ChangeLenguage(TranslationManager.Instance.currentLenguage);
             //ChangeLenguage(TranslationManager.Instance.currentLenguage);
         }
 
@@ -45,7 +45,9 @@ namespace TranslationSystem
                 myText = GetComponent<TextMeshProUGUI>();
             }
 
-            myText.text = TranslationManager.Instance.traductions[lenguageID][textID];
+            if (string.Compare(textID, "") == 0) return;
+
+            myText.text = TranslationManager.Instance.translations[lenguageID][textID];
         }
     }
 

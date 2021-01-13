@@ -1,17 +1,24 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveLoadManager : Singleton<SaveLoadManager>
 {
+    [Header("Save Paths")]
     public string settingsPath = "Settings.json";
+    public string scorePath = "Score.json";
+
+    public event Action OnDataLoaded;
 
     [HideInInspector]
     public bool dataLoaded = false;
 
+
     protected override void Awake()
     {
         base.Awake();
+        if (returnAwake) return;
         Application.targetFrameRate = 30;
         LoadData();
     }
@@ -25,28 +32,33 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
     private void OnApplicationQuit()
     {
         SaveData();
+
     }
 
 
     public void SaveData()
     {
         if (!dataLoaded) return;
-
-        ConfigurationManager.settings.SaveData(settingsPath);
+        print("Save Data");
+        ConfigurationManager.settings.SaveDataPlayerPrefs(settingsPath);
+        ScoreManager.record.SaveDataPlayerPrefs(scorePath);
     }
 
     public void LoadData()
     {
-        ConfigurationSettings settings = settingsPath.LoadData<ConfigurationSettings>();
-        if (settings == null)
-        {
-            ConfigurationManager.settings = new ConfigurationSettings();
-        }
-        else
-        {
-            ConfigurationManager.settings = settings;
-        }
 
+        print("Entra a load data");
+        //Load configuration settings
+        ConfigurationSettings settings = settingsPath.LoadDataPlayerPrefs<ConfigurationSettings>();
+        ConfigurationManager.settings = SaveLoadDataExtensions.CheckData(settings);
+
+        //Load players record
+        ScoreData record = scorePath.LoadDataPlayerPrefs<ScoreData>();
+        ScoreManager.record = SaveLoadDataExtensions.CheckData(record); 
+
+        //data is loaded
         dataLoaded = true;
+        OnDataLoaded?.Invoke();
     }
+    
 }

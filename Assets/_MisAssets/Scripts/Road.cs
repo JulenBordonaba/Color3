@@ -137,6 +137,14 @@ public class Road : Singleton<Road>
         }
     }
 
+    public void FallAllTiles()
+    {
+        foreach(Tile til in tiles)
+        {
+            til.Fall();
+        }
+    }
+
     public void TileFall()
     {
         int max = 0;

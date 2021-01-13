@@ -6,7 +6,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     [SerializeField]
     private bool dontDestroy = false;
-
+    protected bool returnAwake = false;
     static T m_instance;
 
     /// <summary>
@@ -38,11 +38,14 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             {
                 transform.SetParent(null);
                 DontDestroyOnLoad(this.gameObject);
+                returnAwake = false;
             }
         }
         else
         {
             Destroy(gameObject);
+            returnAwake = true;
+            return;
         }
     }
 

@@ -18,6 +18,23 @@ public static class SaveLoadDataExtensions
 
         File.WriteAllText(completePath, jsonData);
     }
+    
+    /// <summary>
+    /// This function checks if the data is null and sets a default value for it
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="data">The data to check</param>
+    /// <returns>Returns the data with a non null value</returns>
+    public static T CheckData<T>(this T data) where T : new()
+    {
+        if(data==null)
+        {
+            data = new T();
+        }
+
+        return data;
+    }
+
 
     public static T LoadData<T>(this string path)
     {

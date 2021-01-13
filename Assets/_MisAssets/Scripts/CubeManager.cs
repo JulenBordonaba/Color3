@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,10 @@ public class CubeManager : MonoBehaviour
     [Tooltip("The time we save the last input")]
     public float inputSaveTime = 0.2f;
 
+    public GameObject gameOverObject;
+
+    public float dieTime = 2;
+
     [Header("Components")]
     public Animator animator;
     public Rigidbody rb;
@@ -25,6 +30,8 @@ public class CubeManager : MonoBehaviour
     public GameObject model;
     public GameObject cam;
     public ScoreManager score;
+
+    public event Action OnPlayerDies;
 
     protected Tile currentTile;
 
@@ -142,7 +149,8 @@ public class CubeManager : MonoBehaviour
             //Die();
             if (canMove)
             {
-                Road.Instance.TileFall();
+                Road.Instance.FallAllTiles();
+                Die();
             }
         }
     }
@@ -240,6 +248,8 @@ public class CubeManager : MonoBehaviour
     /// </summary>
     public void Die()
     {
+        OnPlayerDies?.Invoke();
+        score.CheckRecord();
         cam.transform.parent = null;
         rb.isKinematic = false;
         canMove = false;
@@ -250,9 +260,11 @@ public class CubeManager : MonoBehaviour
 
     public IEnumerator RestartGame()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(dieTime);
         //Activar ventana flotante con Game Over puntuacion boton nueva partida y boton salir.
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Borrar.
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Borrar.
+
+        gameOverObject?.SetActive(true);
     }
     
 }

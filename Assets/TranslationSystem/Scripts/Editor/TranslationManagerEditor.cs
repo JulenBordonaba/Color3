@@ -14,6 +14,17 @@ namespace TranslationSystem
 
             TranslationManager tm = (TranslationManager)target;
 
+            if(GUILayout.Button("Load Data"))
+            {
+                tm.LoadLenguageDataEditor();
+
+            }
+
+            //if (GUILayout.Button("Show Data"))
+            //{
+            //    tm.ShowDataEditor();
+            //}
+
             GUIStyle style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 20, stretchHeight = true, clipping = TextClipping.Overflow, border = new RectOffset() };
             EditorGUILayout.LabelField(tm.currentLenguage, style, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
         }
